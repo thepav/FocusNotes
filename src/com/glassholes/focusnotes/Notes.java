@@ -82,7 +82,7 @@ public class Notes extends Activity implements TextWatcher,OnKeyListener{
 					}
 				}
 				if(arg2.getKeyCode()==67 && arg2.getAction()==KeyEvent.ACTION_DOWN){
-					note.getEditableText().delete(note.getEditableText().length()-1, note.getEditableText().length());
+					note.getEditableText().delete(note.getSelectionEnd()-1, note.getSelectionEnd());
 				}
 				//Move cursor left
 				if(arg2.getKeyCode()==21 && arg2.getAction()==KeyEvent.ACTION_DOWN){
