@@ -1,5 +1,4 @@
-FocusNotes  
-(** Please don't fork yet. All code has not been uploaded**)
+FocusNotes (** Please don't fork yet. All code has not been uploaded**)
 =======
 
 When you sit in a lecture what options do you currently have to take notes? You can write with a pencil/pen, but if you're in a really rigorous class, chances are you're going to write way too slow to keep up. You probably won't understand the professor at all until you review the material later on your own. You could type on a laptop but then you're frequently taking your attention off of the professor the type on your screen. You're neck is going up and down constantly, and if there's ever a diagram or equation written on the board, you're speed goes out the window. You could not take notes and focus on the professor, but good luck remembering any of it 3 hours later.
