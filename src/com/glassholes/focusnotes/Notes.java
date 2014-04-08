@@ -1,6 +1,18 @@
 package com.glassholes.focusnotes;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import com.example.rtf.R;
+import com.glassholes.jrtf.Rtf;
+
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,6 +54,11 @@ public class Notes extends Activity implements TextWatcher,OnKeyListener{
 
 			@Override
 			public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+				if(arg2.getKeyCode()==23){
+					//tap
+					save(note.getText().toString());
+					return true;
+				}
 				int thisline = findLastLine(note.getEditableText(),note.getSelectionEnd());
 				thisline+=1;
 				
@@ -204,6 +221,70 @@ public class Notes extends Activity implements TextWatcher,OnKeyListener{
 		note.setText(">\n>");
 	}
 
+	public void save(String input)
+	{
+		//File out = new File( "out.rtf" );
+
+	    //RtfPara nextPar = RtfPara.p( "second paragraph" );
+		//String input = ">Cactuses\n>>They're Spiky\n>>They're green\n>Your mom\n>>She's spiky\n>>She's not green\n>Chris\n>>He get's high\n>>>Especially when I'm trying to do things\n>>>Everybody loves Chris\n>>Lolcano\n>Octopus";
+		String[] splitText = input.split("\n");
+		Rtf.rtf().p( "Hello World" );
+		for (String i: splitText)
+		{
+			String j = i.replace(">",  "\t") + "\n";
+			Rtf.rtf().p(j);
+		}
+	   // Rtf test = Rtf.section( p("hello")).out);
+	    //rtf().section( p( "Hello World" ) ).out
+	    //test.p("hello world \t\t \n Hello again");
+		//Rtf test = Rtf.rtf().section( ).out( new FileWriter("out.rtf") );
+	    
+	    try {
+	        FileOutputStream fos = openFileOutput("file_name"+".rtf",Context.MODE_PRIVATE);
+	        Writer z = new OutputStreamWriter(fos);
+	        for (String i: splitText)
+			{
+				String j = i.replace(">",  "\t") + "\n";
+				z.write(j);
+				//Rtf.rtf().p(j);
+			}
+	        
+	        z.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    try {
+	        FileInputStream fis = openFileInput("file_name"+".rtf");
+	        BufferedReader r = new BufferedReader(new InputStreamReader(fis));
+	        String line= r.readLine();
+	        Log.i("Read", line);
+	        r.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        Log.i("TESTE", "FILE - false");
+	    }
+	    //String fn = "file_name"+".docx";
+	    SendToCloud sync = new SendToCloud("file_name.rtf",this);
+	    sync.execute();
+	    
+	    //SendToCloud sync = new SendToCloud("test.txt");
+	    //sync.execute();
+	    /*
+	    FileOutputStream outStream = null;
+	    try {
+            outStream = openFileOutput("/Documents/test.docx", Context.MODE_WORLD_READABLE);
+            outStream.write(test.out().toString().getBytes());
+            outStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e)
+        {
+        	e.printStackTrace();
+        }*/
+        
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
